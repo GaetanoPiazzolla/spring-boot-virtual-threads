@@ -1,4 +1,4 @@
-# Spring Boot with Virtual Threads
+# Spring Boot with [Virtual Threads](https://blog.devgenius.io/java-virtual-threads-715c162c6c39)
 
 - Gradle 7.6
 - Java 19
