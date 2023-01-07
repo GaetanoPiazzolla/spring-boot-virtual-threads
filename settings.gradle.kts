@@ -1,1 +1,1 @@
-rootProject.name = "spring-boot-virtual-threads"
+rootProject.name = "spring-boot-app"

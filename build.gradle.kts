@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.0.0"
+    id("org.springframework.boot") version "3.0.1"
 }
 apply(plugin = "io.spring.dependency-management")
 
@@ -15,13 +15,18 @@ repositories {
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("io.micrometer:micrometer-registry-prometheus")
+    runtimeOnly("org.postgresql:postgresql")
 }
 
-group = "com.example"
-version = "0.0.1-SNAPSHOT"
-description = "spring-boot-virtual-threads"
-java.sourceCompatibility = JavaVersion.VERSION_19
+group = "gae.piaz"
+version = "0.0.2-SNAPSHOT"
+description = "spring-boot-app"
 
 tasks {
     val preview = "--enable-preview"
