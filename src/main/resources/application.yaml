@@ -1,3 +1,5 @@
+thread-mode: ${THREAD_MODE}
+
 spring:
 
   datasource:
@@ -5,11 +7,6 @@ spring:
     url: jdbc:postgresql://db-service:5432/postgres?currentSchema=library
     platform: postgres
     password: postgres
-    hikari:
-      maximumPoolSize: ${POOL_SIZE}
-      minimum-idle: ${POOL_SIZE}
-      poolName: jdbc-pool
-      idleTimeout: 1800000
 
   jpa:
     generate-ddl: 'false'
