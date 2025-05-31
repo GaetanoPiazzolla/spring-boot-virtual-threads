@@ -33,4 +33,4 @@ management:
       show-details: always
   metrics:
     tags:
-      application: spring-jdbc
+      application: spring-boot-virtual-threads-jdk19
