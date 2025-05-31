@@ -25,8 +25,8 @@ dependencies {
 }
 
 group = "gae.piaz"
-version = "0.0.2-SNAPSHOT"
-description = "spring-boot-app"
+version = "0.0.3-SNAPSHOT"
+description = "spring-boot-virtual-threads-jdk19"
 
 tasks {
     val preview = "--enable-preview"
