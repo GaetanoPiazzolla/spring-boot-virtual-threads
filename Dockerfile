@@ -1,18 +1,25 @@
-# https://docs.docker.com/build/building/multi-stage/#use-multi-stage-builds
+# -------- First Stage: Build --------
+FROM eclipse-temurin:19-jdk-focal AS builder
 
-# First Stage
-FROM arm64v8/eclipse-temurin:19-jdk-focal as builder
-WORKDIR /src
-COPY src ./src/
-COPY gradle ./gradle/
-COPY build.gradle.kts ./
-COPY gradlew ./
-COPY settings.gradle.kts ./
-RUN chmod 777 ./gradlew
-RUN ./gradlew clean build
+WORKDIR /app
 
-# Second Stage
-FROM arm64v8/eclipse-temurin:19-jre
+COPY gradle gradle
+COPY gradlew build.gradle.kts settings.gradle.kts ./
+RUN chmod +x gradlew
+
+RUN ./gradlew dependencies --no-daemon || true
+
+COPY src src
+
+RUN ./gradlew clean build --no-daemon
+
+# -------- Second Stage: Runtime --------
+FROM eclipse-temurin:19-jre
+
+WORKDIR /app
+
 EXPOSE 8080
-COPY --from=builder /src/build/libs/spring-boot-app*  /app/spring-boot.jar
-ENTRYPOINT ["java","-Duser.timezone=GMT+1","-jar","--enable-preview", "/app/spring-boot.jar"]
+
+COPY --from=builder /app/build/libs/*.jar spring-boot.jar
+
+ENTRYPOINT ["java", "--enable-preview", "-Duser.timezone=GMT+1", "-jar", "spring-boot.jar"]
