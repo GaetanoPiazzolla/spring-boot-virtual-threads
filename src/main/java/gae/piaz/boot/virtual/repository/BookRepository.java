@@ -1,7 +1,12 @@
 package gae.piaz.boot.virtual.repository;
 
+import jakarta.transaction.Transactional;
+
 import gae.piaz.boot.virtual.domain.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,4 +17,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     Book findByIsbn(String isbn);
 
+    @Transactional
+    @Query("DELETE FROM Book e WHERE e.id <> :idToKeep")
+    @Modifying
+    void deleteAllBut(@Param("idToKeep") Integer idToKeep);
 }
