@@ -4,6 +4,8 @@ spring:
 
   datasource:
     url: ${JDBC_URL:jdbc:postgresql://localhost:5432/postgres?currentSchema=library&user=postgres&password=postgres}
+    hikari:
+      maximum-pool-size: ${HIKARICP_CONNECTION_POOL:15}
 
   jpa:
     generate-ddl: 'false'
