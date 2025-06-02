@@ -1,16 +1,22 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.0.1"
+    id("org.springframework.boot") version "4.0.0-SNAPSHOT"
+    id("io.spring.dependency-management") version "1.1.7"
 }
-apply(plugin = "io.spring.dependency-management")
 
 repositories {
-    mavenLocal()
-    maven {
-        url = uri("https://repo.spring.io/milestone")
-    }
-    maven {
-        url = uri("https://repo.maven.apache.org/maven2/")
+    mavenCentral()
+    maven { url = uri("https://repo.spring.io/milestone") }
+    maven { url = uri("https://repo.spring.io/snapshot") }
+}
+
+group = "gae.piaz"
+version = "0.0.1-SNAPSHOT"
+description = "spring-boot-virtual-threads-jdk19"
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(19)
     }
 }
 
@@ -23,10 +29,6 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("org.postgresql:postgresql")
 }
-
-group = "gae.piaz"
-version = "0.0.3-SNAPSHOT"
-description = "spring-boot-virtual-threads-jdk19"
 
 tasks {
     val preview = "--enable-preview"

@@ -32,4 +32,4 @@ management:
       show-details: always
   metrics:
     tags:
-      application: spring-boot-virtual-threads-jdk19
+      application: ${TAGS_APP_NAME:spring-boot-jdk19}
