@@ -1,7 +1,7 @@
 plugins {
     java
-    id("org.springframework.boot") version "4.0.0-SNAPSHOT"
-    id("io.spring.dependency-management") version "1.1.7"
+    id("org.springframework.boot") version "__SPRING_BOOT_VERSION__"
+    id("io.spring.dependency-management") version "__SPRING_DEPENDENCY_MANAGEMENT_VERSION__"
 }
 
 repositories {
@@ -16,7 +16,7 @@ description = "spring-boot-virtual-threads"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
+        languageVersion = JavaLanguageVersion.of("__JAVA_VERSION__".toInt())
     }
 }
 

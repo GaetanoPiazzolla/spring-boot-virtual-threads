@@ -1,10 +1,24 @@
-# -------- First Stage: Build --------
-FROM eclipse-temurin:19-jdk-focal AS builder
+ARG JAVA_VERSION
+ARG SPRING_BOOT_VERSION
+ARG SPRING_DEPENDENCY_MANAGEMENT_VERSION
+
+FROM eclipse-temurin:${JAVA_VERSION}-jdk
+
+ARG JAVA_VERSION
+ARG SPRING_BOOT_VERSION
+ARG SPRING_DEPENDENCY_MANAGEMENT_VERSION
 
 WORKDIR /app
 
 COPY gradle gradle
-COPY gradlew build.gradle.kts settings.gradle.kts ./
+COPY gradlew template.gradle.kts settings.gradle.kts ./
+
+RUN echo "Replacing versions: Java=${JAVA_VERSION}, Spring Boot=${SPRING_BOOT_VERSION}, Spring DM=${SPRING_DEPENDENCY_MANAGEMENT_VERSION}" && \
+    sed -i "s|__JAVA_VERSION__|${JAVA_VERSION}|g" template.gradle.kts && \
+    sed -i "s|__SPRING_BOOT_VERSION__|${SPRING_BOOT_VERSION}|g" template.gradle.kts && \
+    sed -i "s|__SPRING_DEPENDENCY_MANAGEMENT_VERSION__|${SPRING_DEPENDENCY_MANAGEMENT_VERSION}|g" template.gradle.kts && \
+    mv template.gradle.kts build.gradle.kts
+
 RUN chmod +x gradlew
 
 RUN ./gradlew dependencies --no-daemon || true
@@ -13,13 +27,6 @@ COPY src src
 
 RUN ./gradlew clean build --no-daemon
 
-# -------- Second Stage: Runtime --------
-FROM eclipse-temurin:19-jre
-
-WORKDIR /app
-
 EXPOSE 8080
 
-COPY --from=builder /app/build/libs/*.jar spring-boot.jar
-
-ENTRYPOINT ["java", "--enable-preview", "-Duser.timezone=GMT+1", "-jar", "spring-boot.jar"]
+ENTRYPOINT ["sh", "-c", "java --enable-preview -Duser.timezone=GMT+1 -jar build/libs/spring-boot-virtual-threads-0.0.1-SNAPSHOT.jar"]

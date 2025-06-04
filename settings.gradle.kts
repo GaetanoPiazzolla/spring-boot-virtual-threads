@@ -5,4 +5,4 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = "spring-boot-virtual-threads-jdk19"
+rootProject.name = "spring-boot-virtual-threads"

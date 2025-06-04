@@ -1,6 +1,7 @@
-thread-mode: ${THREAD_MODE:virtual}
-
 spring:
+  threads:
+    virtual:
+      enabled: ${VIRTUAL_THREAD_ENABLED:true}
 
   datasource:
     url: ${JDBC_URL:jdbc:postgresql://localhost:5432/postgres?currentSchema=library&user=postgres&password=postgres}
@@ -32,4 +33,4 @@ management:
       show-details: always
   metrics:
     tags:
-      application: ${TAGS_APP_NAME:spring-boot-jdk19}
+      application: spring-boot-virtual-threads

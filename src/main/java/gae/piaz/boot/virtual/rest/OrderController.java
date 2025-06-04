@@ -1,12 +1,7 @@
 package gae.piaz.boot.virtual.rest;
 
-import gae.piaz.boot.virtual.domain.dto.OrderDTO;
-import gae.piaz.boot.virtual.domain.Book;
-import gae.piaz.boot.virtual.domain.Order;
-import gae.piaz.boot.virtual.domain.User;
-import gae.piaz.boot.virtual.repository.BookRepository;
-import gae.piaz.boot.virtual.repository.OrderRepository;
-import gae.piaz.boot.virtual.repository.UserRepository;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
+import gae.piaz.boot.virtual.domain.Book;
+import gae.piaz.boot.virtual.domain.Order;
+import gae.piaz.boot.virtual.domain.User;
+import gae.piaz.boot.virtual.domain.dto.OrderDTO;
+import gae.piaz.boot.virtual.repository.BookRepository;
+import gae.piaz.boot.virtual.repository.OrderRepository;
+import gae.piaz.boot.virtual.repository.UserRepository;
 
 @RestController
 @RequestMapping("/orders")
