@@ -1,6 +1,10 @@
 package gae.piaz.boot.virtual.repository;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import gae.piaz.boot.virtual.domain.Order;
@@ -11,4 +15,8 @@ import gae.piaz.boot.virtual.domain.Order;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
+    @Transactional
+    @Modifying
+    @Query(value = "TRUNCATE TABLE orders RESTART IDENTITY CASCADE", nativeQuery = true)
+    void truncate();
 }
