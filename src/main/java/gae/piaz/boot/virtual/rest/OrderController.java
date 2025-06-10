@@ -1,5 +1,6 @@
 package gae.piaz.boot.virtual.rest;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -51,6 +52,7 @@ public class OrderController {
         order.setUser(user);
         order.setQuantity(1);
         order.setBook(book);
+        order.setCreatedAt(LocalDateTime.now());
         order = orderRepository.save(order);
 
         OrderDTO orderDTO = new OrderDTO(order.getOrderId(), order.getQuantity(), book.getBookId(), user.getUserId());

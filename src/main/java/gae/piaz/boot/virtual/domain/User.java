@@ -12,7 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "library")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;

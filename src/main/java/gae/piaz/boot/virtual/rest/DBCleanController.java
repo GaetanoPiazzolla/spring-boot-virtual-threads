@@ -31,7 +31,7 @@ public class DBCleanController {
     public ResponseEntity<Void> databaseClean() {
         log.info("cleaning up database");
         bookRepository.deleteAllBut(1);
-        orderRepository.truncate();
+        orderRepository.deleteOrders();
         return ResponseEntity.noContent()
             .build();
     }

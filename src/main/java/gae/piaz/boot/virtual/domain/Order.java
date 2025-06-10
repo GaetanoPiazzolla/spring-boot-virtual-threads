@@ -1,6 +1,7 @@
 package gae.piaz.boot.virtual.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,7 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders", schema = "library")
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,6 +33,9 @@ public class Order implements Serializable {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     public Order() {
     }
@@ -66,5 +70,13 @@ public class Order implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

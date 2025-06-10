@@ -1,11 +1,13 @@
 package gae.piaz.boot.virtual.repository;
 
-import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import gae.piaz.boot.virtual.domain.Order;
 
@@ -17,6 +19,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "TRUNCATE TABLE orders RESTART IDENTITY CASCADE", nativeQuery = true)
-    void truncate();
+    @Query(value = "delete from Order o")
+    void deleteOrders();
+
+    List<Order> findByUserUserIdAndCreatedAtAfter(Integer userId, LocalDateTime date);
 }

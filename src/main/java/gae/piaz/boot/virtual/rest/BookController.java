@@ -1,5 +1,6 @@
 package gae.piaz.boot.virtual.rest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -64,6 +65,7 @@ public class BookController {
         e.setTitle(dto.title());
         e.setAuthor(dto.author());
         e.setYear(dto.year());
+        e.setCreatedAt(LocalDateTime.now());
         e = bookRepository.save(e);
 
         ResponseEntity<BookDTO> resp = ResponseEntity.ok(new BookDTO(e.getBookId(), e.getAuthor(), e.getIsbn(), e.getTitle(), e.getYear()));

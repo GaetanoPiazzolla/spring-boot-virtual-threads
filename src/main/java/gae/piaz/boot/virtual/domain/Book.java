@@ -1,6 +1,7 @@
 package gae.piaz.boot.virtual.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "books")
+@Table(name = "books", schema = "library")
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,6 +28,8 @@ public class Book implements Serializable {
     private String title;
 
     private Integer year;
+
+    private LocalDateTime createdAt;
 
     public Book() {
 
@@ -70,5 +73,13 @@ public class Book implements Serializable {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
