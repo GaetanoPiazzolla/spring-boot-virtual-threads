@@ -1,11 +1,11 @@
 package gae.piaz.boot.virtual.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootVersion;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/config")
