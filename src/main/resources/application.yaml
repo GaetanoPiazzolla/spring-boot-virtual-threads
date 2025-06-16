@@ -5,8 +5,10 @@ spring:
 
   datasource:
     url: ${JDBC_URL:jdbc:postgresql://localhost:5432/postgres?currentSchema=library&user=postgres&password=postgres}
+    agroal:
+      max-size: ${CONNECTION_POOL_SIZE:15}
     hikari:
-      maximum-pool-size: ${HIKARICP_CONNECTION_POOL:15}
+      maximum-pool-size: ${CONNECTION_POOL_SIZE:15}
 
   jpa:
     generate-ddl: 'false'
@@ -19,7 +21,7 @@ spring:
       ddl-auto: none
 
 server:
-  port: ${SERVER_PORT:8081}
+  port: ${SERVER_PORT:8080}
   tomcat:
     mbeanregistry:
       enabled: true

@@ -1,5 +1,6 @@
 package gae.piaz.boot.virtual.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.jspecify.annotations.Nullable;
@@ -28,29 +29,19 @@ public class MixedWorkloadService {
     @Autowired
     private BookRepository bookRepository;
 
-    @Autowired
-    private InnerWorkloadService innerWorkloadService;
 
     @Transactional
     public MixedWorkloadController.ComplexOperationResult executeComplexOperationInSameTransaction(Integer userId) {
-        return getComplexOperationResult(userId, false);
-    }
-
-    public MixedWorkloadController.@Nullable ComplexOperationResult executeComplexOperationMultipleTransactions(Integer userId) {
-        return getComplexOperationResult(userId, true);
-    }
-
-    private MixedWorkloadController.ComplexOperationResult getComplexOperationResult(Integer userId, boolean optimized) {
-        log.info("Starting complex operation for user {} - Optimized - {}", userId, optimized);
+        log.info("Starting complex operation for user {} - Optimized - {}", userId);
 
         // 1. Database call - get user's recent orders
-        List<Order> recentOrders = optimized ? innerWorkloadService.getUserRecentOrdersReadOnly(userId) : innerWorkloadService.getUserRecentOrders(userId);
+        List<Order> recentOrders = getUserRecentOrders(userId);
 
         // 2. External API call - validate user status
         String userStatus = callExternalUserService(userId);
 
         // 3. Another database call - get recommended books
-        List<Book> recommendedBooks = optimized ? innerWorkloadService.getRecommendedBooksReadOnly() : innerWorkloadService.getRecommendedBooks();
+        List<Book> recommendedBooks = getRecommendedBooks();
 
         // 4. External API call - get weather for shipping estimate
         String weatherData = callWeatherService();
@@ -84,6 +75,18 @@ public class MixedWorkloadService {
             log.error("Error calling weather service", e);
             return "UNKNOWN";
         }
+    }
+
+    // Separate transactional methods for DB operations
+    public List<Order> getUserRecentOrders(Integer userId) {
+        log.debug("Fetching recent orders for user {}", userId);
+        return orderRepository.findByUserUserIdAndCreatedAtAfter(userId, LocalDateTime.now()
+            .minusDays(30));
+    }
+
+    public List<Book> getRecommendedBooks() {
+        log.debug("Fetching recommended books");
+        return bookRepository.findTop5ByOrderByCreatedAtDesc();
     }
 
 }

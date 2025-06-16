@@ -32,9 +32,4 @@ public class MixedWorkloadController {
         return ResponseEntity.ok(workloadService.executeComplexOperationInSameTransaction(userId));
     }
 
-    @GetMapping("/complex-operation/optimized/{userId}")
-    public ResponseEntity<ComplexOperationResult> optimized_complexOperation(@PathVariable Integer userId) {
-        return ResponseEntity.ok(workloadService.executeComplexOperationMultipleTransactions(userId));
-    }
-
 }
