@@ -2,7 +2,7 @@
 
 - Gradle 8.14.1
 - Java 19
-- Spring Boot 4.0.0-SNAPSHOT
+- Spring Boot 3.5.0
 
 ### Run with:
 
